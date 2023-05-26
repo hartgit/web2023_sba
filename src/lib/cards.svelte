@@ -1,32 +1,26 @@
 <script>
-    import Cards from "$lib/cards.svelte";
-    
-    import { onMount } from "svelte";
-    import { dataFetch } from "../lib/stores";
-    
-
-    onMount(() => {
-    dataFetch(Math.floor(Math.random() * 825) + 1, 0);
-    dataFetch(Math.floor(Math.random() * 825) + 1, 1);
-    dataFetch(Math.floor(Math.random() * 825) + 1, 2);
-    dataFetch(Math.floor(Math.random() * 825) + 1, 3);
-    dataFetch(Math.floor(Math.random() * 825) + 1, 4);
-    dataFetch(Math.floor(Math.random() * 825) + 1, 5);
-    
-  });
+  import { characters } from "../lib/stores";
+  
+ 
 </script>
 
-<div class="grid">
-    <Cards />
-</div>
+{#each characters as item}
+  <div class="card">
+    <div class="image"><img src={item.img} /></div>
+    <div class="info">
+      <h1 class="name">{item?.name}</h1>
+      <div class="status">
+        <div class="dead" style="background: firebrick" />
+        {item?.status}
+        </div>
+    
+      <h3 class="locationLabel">Last known location</h3>
+      <h3 class="location">{item.location.name}</h3>
+    </div>
+  </div>
+{/each}
 
 <style>
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 30px;
-  }
-
   .card {
     background: #333;
     overflow: hidden;
@@ -49,7 +43,6 @@
   }
 
   .dead {
-    background: firebrick;
     width: 10px;
     height: 10px;
     border-radius: 100%;
